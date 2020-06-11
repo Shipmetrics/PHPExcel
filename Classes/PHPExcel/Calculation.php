@@ -3367,7 +3367,7 @@ class PHPExcel_Calculation
 //                    echo 'Element is a Variable, Constant, String, Number or Boolean<br />';
                     //    If the last entry on the stack was a : operator, then we may have a row or column range reference
                     $testPrevOp = $stack->last(1);
-                    if ($testPrevOp['value'] == ':') {
+                    if ($testPrevOp && $testPrevOp['value'] == ':') {
                         $startRowColRef = $output[count($output)-1]['value'];
                         $rangeWS1 = '';
                         if (strpos('!', $startRowColRef) !== false) {
@@ -3907,7 +3907,7 @@ class PHPExcel_Calculation
             }
         }
         // when we're out of tokens, the stack should have a single element, the final result
-        if ($stack->count() != 1) {
+        if ($stack->count() < 1) {
             return $this->raiseFormulaError("internal error");
         }
         $output = $stack->pop();
